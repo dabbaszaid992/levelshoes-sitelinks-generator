@@ -12,13 +12,13 @@ import os, json
 #  CONFIGURATION — fill in your credentials
 # ══════════════════════════════════════════════════════════════════════════
 
-OPENAI_API_KEY         = "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"
+OPENAI_API_KEY         = os.environ.get("OPENAI_API_KEY", "")
 
-GOOGLE_DEVELOPER_TOKEN = "gu9dA36n36VdJvr25vTdFg"
-GOOGLE_CLIENT_ID       = "188519388533-rh6bll4jknob3u4cgjba6uf2oni55j7u.apps.googleusercontent.com"
-GOOGLE_CLIENT_SECRET   = "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"
-GOOGLE_REFRESH_TOKEN   = "1//0ga-8LZexoSOICgYIARAAGBASNwF-L9Ir26kzMMkfvO8LGDP0O7O-cctZsxAOaQnisukG97SryNr-EczA2KpQQMGso59bURZcWxY"
-MCC_CUSTOMER_ID        = "162-305-8174"   # Your MCC account ID (with dashes)
+GOOGLE_DEVELOPER_TOKEN = os.environ.get("GOOGLE_DEVELOPER_TOKEN", "")
+GOOGLE_CLIENT_ID       = os.environ.get("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET   = os.environ.get("GOOGLE_CLIENT_SECRET", "")
+GOOGLE_REFRESH_TOKEN   = os.environ.get("GOOGLE_REFRESH_TOKEN", "")
+MCC_CUSTOMER_ID        = os.environ.get("MCC_CUSTOMER_ID", "")
 
 # ══════════════════════════════════════════════════════════════════════════
 
