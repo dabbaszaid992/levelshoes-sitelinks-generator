@@ -1,0 +1,4 @@
+# Level Shoes Sitelinks Generator — API Key Config
+# Paste your OpenAI key below. Never share this file.
+
+OPENAI_API_KEY= "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"
