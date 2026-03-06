@@ -17,7 +17,7 @@ OPENAI_API_KEY         = "sk-or-v1-d6c0837bd49796ea165ad1cf4a4305d3ac9172cab28e7
 GOOGLE_DEVELOPER_TOKEN = "gu9dA36n36VdJvr25vTdFg"
 GOOGLE_CLIENT_ID       = "188519388533-rh6bll4jknob3u4cgjba6uf2oni55j7u.apps.googleusercontent.com"
 GOOGLE_CLIENT_SECRET   = "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"
-GOOGLE_REFRESH_TOKEN   = "4/1AfrIepASFg16WAOKHwb3A52_sDx96FesfV1O7Cm1VX0-U1S_zph7TwLYrsg"
+GOOGLE_REFRESH_TOKEN   = "1//0ga-8LZexoSOICgYIARAAGBASNwF-L9Ir26kzMMkfvO8LGDP0O7O-cctZsxAOaQnisukG97SryNr-EczA2KpQQMGso59bURZcWxY"
 MCC_CUSTOMER_ID        = "162-305-8174"   # Your MCC account ID (with dashes)
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -297,4 +297,6 @@ if __name__ == "__main__":
     print("4. POST http://localhost:5000/gads/auth-token  {\"code\":\"...\"}")
     print("5. Copy refresh_token → paste into GOOGLE_REFRESH_TOKEN above")
     print("6. Restart server — you're connected!\n")
-    app.run(host="127.0.0.1", port=5000, debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
+
