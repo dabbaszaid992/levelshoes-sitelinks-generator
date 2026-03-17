@@ -786,7 +786,7 @@ function editRow(el,field,i){
 
 // ── AI ────────────────────────────────────────────────────────────────────
 async function callGPT(prompt,model){
-  const resp=await fetch("http://localhost:5000/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model,prompt})});
+  const resp=await fetch("https://levelshoes-sitelinks-generator-production.up.railway.app/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model,prompt})});
   if(!resp.ok){const e=await resp.json().catch(()=>({}));throw new Error(e?.error||`Server error ${resp.status}`);}
   return(await resp.json()).result||"";
 }
@@ -1015,7 +1015,7 @@ async function loadAccounts(){
   const sel=document.getElementById("gadsAccount");
   sel.innerHTML='<option value="">Loading accounts...</option>';
   try{
-    const r=await fetch("http://localhost:5000/gads/accounts");
+    const r=await fetch("https://levelshoes-sitelinks-generator-production.up.railway.app/gads/accounts");
     const d=await r.json();
     if(d.error)throw new Error(d.error);
     sel.innerHTML='<option value="">— Select account —</option>'+
@@ -1034,7 +1034,7 @@ async function loadCampaigns(){
   document.getElementById("gadsStatus").textContent="Loading campaigns...";
   document.getElementById("gadsStatus").style.color="var(--ai)";
   try{
-    const r=await fetch("http://localhost:5000/gads/campaigns",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({customer_id:accountId})});
+    const r=await fetch("https://levelshoes-sitelinks-generator-production.up.railway.app/gads/campaigns",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({customer_id:accountId})});
     const d=await r.json();
     if(d.error)throw new Error(d.error);
     _allCampaigns=d.campaigns;_selCampaigns.clear();
@@ -1085,7 +1085,7 @@ async function pushToGoogleAds(){
   document.getElementById("gadsStatus").style.color="var(--ai)";
 
   try{
-    const r=await fetch("http://localhost:5000/gads/push-sitelinks",{
+    const r=await fetch("https://levelshoes-sitelinks-generator-production.up.railway.app/gads/push-sitelinks",{
       method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
         customer_id:accountId,
