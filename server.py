@@ -9,16 +9,41 @@ from openai import OpenAI
 import os, json
 
 # ══════════════════════════════════════════════════════════════════════════
-#  CONFIGURATION — fill in your credentials
+#  CONFIGURATION — loaded from .env file (never hardcode credentials)
 # ══════════════════════════════════════════════════════════════════════════
 
-OPENAI_API_KEY         = os.environ.get("OPENAI_API_KEY", "")
+# Load .env file if it exists
+def load_env(filepath=".env"):
+    if os.path.exists(filepath):
+        with open(filepath) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, _, value = line.partition("=")
+                    os.environ.setdefault(key.strip(), value.strip())
 
+load_env()
+
+OPENAI_API_KEY         = os.environ.get("OPENAI_API_KEY", "")
 GOOGLE_DEVELOPER_TOKEN = os.environ.get("GOOGLE_DEVELOPER_TOKEN", "")
 GOOGLE_CLIENT_ID       = os.environ.get("GOOGLE_CLIENT_ID", "")
 GOOGLE_CLIENT_SECRET   = os.environ.get("GOOGLE_CLIENT_SECRET", "")
 GOOGLE_REFRESH_TOKEN   = os.environ.get("GOOGLE_REFRESH_TOKEN", "")
 MCC_CUSTOMER_ID        = os.environ.get("MCC_CUSTOMER_ID", "")
+
+# Validate required credentials on startup
+missing = [k for k, v in {
+    "OPENAI_API_KEY": OPENAI_API_KEY,
+    "GOOGLE_DEVELOPER_TOKEN": GOOGLE_DEVELOPER_TOKEN,
+    "GOOGLE_CLIENT_ID": GOOGLE_CLIENT_ID,
+    "GOOGLE_CLIENT_SECRET": GOOGLE_CLIENT_SECRET,
+    "GOOGLE_REFRESH_TOKEN": GOOGLE_REFRESH_TOKEN,
+    "MCC_CUSTOMER_ID": MCC_CUSTOMER_ID,
+}.items() if not v]
+
+if missing:
+    print(f"\n⚠️  WARNING: Missing credentials in .env: {', '.join(missing)}")
+    print("   Please copy .env.example to .env and fill in your values.\n")
 
 # ══════════════════════════════════════════════════════════════════════════
 
@@ -26,6 +51,18 @@ app = Flask(__name__)
 CORS(app)
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 DEFAULT_MODEL = "gpt-4o"
+
+
+# ── Serve HTML frontend ────────────────────────────────────────────────────
+@app.route("/", methods=["GET"])
+def index():
+    import os
+    # Try common HTML filenames
+    for filename in ["index.html", "LevelShoes_Sitelinks_Generator (2).html", "LevelShoes_Sitelinks_Generator.html"]:
+        if os.path.exists(filename):
+            with open(filename, "r", encoding="utf-8") as f:
+                return f.read(), 200, {"Content-Type": "text/html"}
+    return {"error": "HTML file not found"}, 404
 
 
 # ── OpenAI ─────────────────────────────────────────────────────────────────
@@ -299,4 +336,3 @@ if __name__ == "__main__":
     print("6. Restart server — you're connected!\n")
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
-
