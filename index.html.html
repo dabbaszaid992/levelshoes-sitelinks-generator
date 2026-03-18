@@ -257,7 +257,7 @@ select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(3
     </div>
     <div class="fr"><div class="lbl">Language</div>
       <div class="tg" id="tLang">
-        <button class="tb" data-v="EN">EN</button>
+        <button class="tb active" data-v="EN">EN</button>
         <button class="tb" data-v="AR">AR</button>
       </div>
     </div>
@@ -487,7 +487,7 @@ let selGenders = new Set();
 let selBrands  = new Set();
 let selCats    = new Set();
 let tSet       = new Set();
-let lSet       = new Set();
+let lSet       = new Set(["EN"]);
 let rows=[], aiRows=[], _aiVars=null;
 
 const AR={
